@@ -1,9 +1,23 @@
+// import pako from 'pako';
+
+import {IncrementalTransform} from "../../types";
+
 /**
  * A transform that decompresses / inflates Zstd compressed input byte chunks
  */
-export default class ZstdInflateTransform {
+export default class ZstdInflateTransform implements IncrementalTransform {
   /**
    * Atomic deflate convenience
    */
-  static inflate(input: ArrayBuffer, options?: object): Promise<ArrayBuffer>;
+  static inflate(input: ArrayBuffer, options?: object): ArrayBuffer;
+
+  /**
+   * Alternate interface for chunking & without exceptions
+   * @param options
+   */
+  constructor(options: object);
+
+  write(chunk: ArrayBuffer): ArrayBuffer | null;
+
+  end(): ArrayBuffer | null;
 }
